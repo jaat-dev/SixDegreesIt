@@ -1,0 +1,79 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <button *ngIf="!estado" mat-raised-button class="btn-success" (click)="mostrar()">Buscar</button>
+                    <button *ngIf="estado" mat-raised-button class="btn-dark" (click)="mostrar()">Regresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div *ngIf="estado" class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <button *ngIf="estado" mat-raised-button class="btn-primary" (click)="showForm(contenido)">Nuevo</button>
+                </div>
+                <div class="card-body">
+                    <h3 class="titulo text-center">USUARIOS</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>NOMBRE</th>
+                                <th>APELLIDOS</th>
+                                <th>ACCIONES</th>
+                              </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let usuario of listUsuarios">
+                                <td>{{usuario.usuId}}</td>
+                                <td>{{usuario.nombre}}</td>
+                                <td>{{usuario.apellido}}</td>
+                                <td>
+                                    <mat-icon>launch</mat-icon>
+                                    <mat-icon 
+                                        class="button" 
+                                        (click)="eliminarUsuario(usuario.usuId)"
+                                    >
+                                        delete_forever
+                                    </mat-icon>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>  
+    </div>
+</div>
+
+<ng-template #contenido let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Registrar Usuario</h4>
+        <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="guardarUsuario()">
+            <div class="form-group">
+                <div class="input-group">
+                  <input id="nombre" class="form-control" placeholder="Nombre" formControlName="nombre">
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <div class="input-group">
+                  <input id="apellido" class="form-control" placeholder="Apellido" formControlName="apellido">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </div>
+</ng-template>
